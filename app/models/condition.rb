@@ -90,4 +90,64 @@ class Condition < ActiveRecord::Base
       rides[1]
     end
   end
+
+  def self.get_average_rides_wind(range)
+    rides = Trip.where(start_date: Condition.where(mean_wind_speed_mph: range).pluck(:date)).count
+    days = Condition.where(max_temperature_f: range).pluck(:date).count
+    if days == 0
+      days = 1
+    end
+    if rides.nil?
+      rides = 0
+    end
+    rides / days
+  end
+
+  def self.get_best_day_wind(range)
+    rides = Trip.where(start_date: Condition.where(mean_wind_speed_mph: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.last
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
+
+  def self.get_worst_day_wind(range)
+    rides = Trip.where(start_date: Condition.where(mean_wind_speed_mph: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.first
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
+
+  def self.get_average_rides_vis(range)
+    rides = Trip.where(start_date: Condition.where(mean_visibility_miles: range).pluck(:date)).count
+    days = Condition.where(max_temperature_f: range).pluck(:date).count
+    if days == 0
+      days = 1
+    end
+    if rides.nil?
+      rides = 0
+    end
+    rides / days
+  end
+
+  def self.get_best_day_vis(range)
+    rides = Trip.where(start_date: Condition.where(mean_visibility_miles: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.last
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
+
+  def self.get_worst_day_vis(range)
+    rides = Trip.where(start_date: Condition.where(mean_visibility_miles: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.first
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
 end
