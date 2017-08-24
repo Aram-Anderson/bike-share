@@ -34,6 +34,12 @@ class Condition < ActiveRecord::Base
   def self.get_average_rides_temp(range)
     rides = Trip.where(start_date: Condition.where(max_temperature_f: range).pluck(:date)).count
     days = Condition.where(max_temperature_f: range).pluck(:date).count
+    if days == 0
+      days = 1
+    end
+    if rides.nil?
+      rides = 0
+    end
     rides / days
   end
 
@@ -48,6 +54,36 @@ class Condition < ActiveRecord::Base
 
   def self.get_worst_day_temp(range)
     rides = Trip.where(start_date: Condition.where(max_temperature_f: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.first
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
+
+  def self.get_average_rides_percip(range)
+    rides = Trip.where(start_date: Condition.where(precipitation_inches: range).pluck(:date)).count
+    days = Condition.where(max_temperature_f: range).pluck(:date).count
+    if days == 0
+      days = 1
+    end
+    if rides.nil?
+      rides = 0
+    end
+    rides / days
+  end
+
+  def self.get_best_day_percip(range)
+    rides = Trip.where(start_date: Condition.where(precipitation_inches: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.last
+    if rides.nil?
+      rides = 0
+    else
+      rides[1]
+    end
+  end
+
+  def self.get_worst_day_percip(range)
+    rides = Trip.where(start_date: Condition.where(precipitation_inches: range).pluck(:date)).group(:start_date).count.sort_by {|k, v| v}.first
     if rides.nil?
       rides = 0
     else
