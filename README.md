@@ -1,5 +1,15 @@
 # Bike Share
 
+This is a project assigned to push the tam's skills in active record, MVC, and basic styling without the use of Rails.
+
+This project was contributed to by:
+* Aram Anderson
+* Ricky Amparo
+* Becki Srofe
+* Joel Lindow
+
+# Project Requirements / Iterations:
+
 ## Abstract
 
 In this project you'll use Ruby, Sinatra, and Activerecord to build a site that analyzes bike share usage in San Francisco.
