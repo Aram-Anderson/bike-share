@@ -6,7 +6,7 @@ require 'csv'
 require 'pry'
 
 a = Time.now
-puts "Starting seeding..."
+puts "Seeding started at #{a}"
 # system "rake db:drop"
 # system "rake db:create"
 # system "rake db:migrate"
